@@ -1,20 +1,22 @@
-from avto_bot.parsavto import ParsaAvto
-from avto_bot.recogn import AvtoNum
-from avto_bot.vinru import get_inf_avto
+import asyncio
+import setup
+import logging
+from handlers import avtobot
+from aiogram import Bot, Dispatcher
+from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
 
-# Распознаёт на фотографии авто изображение его номера
-pa = ParsaAvto()
-arr_num = pa.get_number('avto.jpg')
-print(arr_num)
+bot = Bot(token=setup.token)
+dp = Dispatcher(bot, storage=MemoryStorage())
+
+async def main():
+    logging.basicConfig(level=logging.INFO)
+
+    avtobot.register_handlers(dp)
+    avtobot.register_handlers_final(dp)
+
+    await dp.start_polling()
 
 
-# Распознаём номер по фото
-obj_num = AvtoNum()
-str_avt_num = obj_num.pars_numb(arr_num)
-print(f'Распознан номер: {str_avt_num}')
-
-
-# Извлекаем информацию о фото по номеру
-info_avto = get_inf_avto(str_avt_num)
-print(info_avto)
+if __name__ == '__main__':
+    asyncio.run(main())

@@ -1,4 +1,4 @@
 easyocr == 1.4.1
-aiogram == 2.15
+aiogram == 2.16
 requests == 2.26
 lxml == 4.6.4
