@@ -98,7 +98,17 @@ async def pars_num(message: types.Message, state: FSMContext):
     arr_num = main.pa.get_number(state_dc['path_photo'])
     # print(arr_num)
     # 2. Читаем номер по фото
-    str_avt_num = main.obj_num.pars_numb(arr_num)
+    # str_avt_num = main.obj_num.pars_numb(arr_num)
+
+    # 2. Деление номера на символы
+    ls_symb = main.pa.div_numbers(arr_num)
+
+    # 3. Предсказание
+    str_avt_num = ''
+    for img_symb in ls_symb:
+        pred_number = main.net.predict(img_symb)
+        str_avt_num += pred_number
+    print(f'{str_avt_num=}')
     await state.update_data(str_num=str_avt_num)
     await ch_num(message, state)
 
