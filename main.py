@@ -5,9 +5,14 @@ from handlers import avtobot
 from aiogram import Bot, Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
+from lib.parsavto import ParsaAvto
+from lib.recogn import AvtoNum
 
 bot = Bot(token=setup.token)
 dp = Dispatcher(bot, storage=MemoryStorage())
+
+pa = ParsaAvto()
+obj_num = AvtoNum()
 
 async def main():
     logging.basicConfig(level=logging.INFO)
